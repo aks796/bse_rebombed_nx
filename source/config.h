@@ -4,8 +4,8 @@
 #define BSNX_CONFIG_H
 
 /* Everything the port owns lives under one SD directory. */
-#define GAME_ROOT      "sdmc:/switch/explodinary"
-#define GAME_ROOT_UNIX "/switch/explodinary"
+#define GAME_ROOT      "sdmc:/switch/bse_rebombed_nx"
+#define GAME_ROOT_UNIX "/switch/bse_rebombed_nx"
 
 /* The Android shared library, copied out of the player's own APK. This port
  * targets BombSquad Explodinary, which ships its own engine build; see
@@ -27,7 +27,7 @@
 #define EXTERNAL_PATH_UNIX  GAME_ROOT_UNIX "/external"
 #define CACHE_PATH_UNIX     GAME_ROOT_UNIX "/cache"
 
-#define PORT_CONFIG_PATH GAME_ROOT "/explodinary.cfg"
+#define PORT_CONFIG_PATH GAME_ROOT "/bse_rebombed_nx.cfg"
 #define FATAL_LOG_PATH   GAME_ROOT "/fatal.txt"
 #define TRACE_LOG_PATH   GAME_ROOT "/trace.txt"
 

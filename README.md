@@ -4,10 +4,10 @@
 
 # bse_rebombed_nx
 
-**BombSquad Explodinary Rebombed on Nintendo Switch**
+**BombSquad Explodinary on Nintendo Switch**
 
 An unofficial Nintendo Switch wrapper for the Android version of
-**BombSquad Explodinary Rebombed**.
+**BombSquad Explodinary**.
 
 [![Switch](https://img.shields.io/badge/Nintendo_Switch-Homebrew-E60012?style=for-the-badge&logo=nintendoswitch&logoColor=white)](#)
 [![Version](https://img.shields.io/badge/Version-1.0.0-4C8BF5?style=for-the-badge)](#)
@@ -20,7 +20,7 @@ An unofficial Nintendo Switch wrapper for the Android version of
 ## About
 
 `bse_rebombed_nx` is a native wrapper that runs the ARM64 Android build of
-**BombSquad Explodinary Rebombed** on Nintendo Switch. It recreates the Android,
+**BombSquad Explodinary** on Nintendo Switch. It recreates the Android,
 Bionic, audio, input, networking and graphics services expected by the game
 under Horizon OS.
 
@@ -63,7 +63,7 @@ sideways with SL and SR under the index fingers. The four buttons on a single
 Joy-Con are read by their position rather than the letter printed on them, so
 both halves put the same action under the same thumb.
 
-Set `face_buttons` in `explodinary.cfg` to `labels`, `default` or `xbox` to
+Set `face_buttons` in `bse_rebombed_nx.cfg` to `labels`, `default` or `xbox` to
 pin one layout instead. Do not use the game's own controller configuration
 screen while the automatic layout is on, since that screen is a menu and would
 record the wrong bindings.
@@ -90,7 +90,7 @@ pacman -S switch-dev switch-mesa switch-libdrm_nouveau switch-sdl2 switch-freety
 Compile the wrapper:
 
 ```bash
-cd explodinary
+cd bse_rebombed_nx
 make -j
 ```
 
@@ -113,11 +113,16 @@ python3 tools/verify_imports.py /path/to/libmain.so source/imports.c
 
 ## Running
 
-Create this folder on the SD card and drop your own APK into it:
+Explodinary is released by the Square Hair Team on Game Jolt:
+
+[gamejolt.com/games/bse-rebombed/1001581](https://gamejolt.com/games/bse-rebombed/1001581)
+
+Take the Android build from there. Create this folder on the SD card and drop
+the APK into it:
 
 ```text
-sd:/switch/explodinary/
-├── explodinary.nro
+sd:/switch/bse_rebombed_nx/
+├── bse_rebombed_nx.nro
 └── BSE_Rebombed.apk
 ```
 
@@ -125,14 +130,14 @@ The first launch unpacks the library and the game data out of the APK, checks
 every file against the checksum the archive recorded for it, and then deletes
 the APK. Explodinary carries about four thousand asset files, so give it a
 couple of minutes; it shows its progress on screen. Set `keep_apk = 1` in
-`explodinary.cfg` to hold on to the archive instead.
+`bse_rebombed_nx.cfg` to hold on to the archive instead.
 
 Afterwards the folder looks like this:
 
 ```text
-sd:/switch/explodinary/
-├── explodinary.nro
-├── explodinary.cfg
+sd:/switch/bse_rebombed_nx/
+├── bse_rebombed_nx.nro
+├── bse_rebombed_nx.cfg
 ├── libmain.so
 ├── trace.txt
 └── no_backup/
@@ -149,7 +154,7 @@ while opening an installed game, then start **BombSquad: Explodinary
 Rebombed** from the Homebrew Menu. Starting the Homebrew Menu from the Album
 applet will not work, and the port says so rather than failing silently.
 
-Settings live in `explodinary.cfg`, which is written on the first launch and
+Settings live in `bse_rebombed_nx.cfg`, which is written on the first launch and
 explains each option in place.
 
 ---
@@ -205,7 +210,7 @@ License 2.0. See `THIRD_PARTY_NOTICES.md` for the full list.
 
 Bug reports and tested improvements are welcome. Include the build version,
 steps to reproduce and the relevant `trace.txt` when reporting an issue. Set
-`log_input = 1` in `explodinary.cfg` first if the problem is a controller
+`log_input = 1` in `bse_rebombed_nx.cfg` first if the problem is a controller
 mapping.
 
 ---

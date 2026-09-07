@@ -68,5 +68,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: explodinary
-          path: explodinary.nro
+          name: bse_rebombed_nx
+          path: bse_rebombed_nx.nro

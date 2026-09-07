@@ -15,7 +15,7 @@ endif
 TOPDIR ?= $(CURDIR)
 include $(DEVKITPRO)/libnx/switch_rules
 
-TARGET      := explodinary
+TARGET      := bse_rebombed_nx
 APP_TITLE   := BombSquad: Explodinary Rebombed
 APP_AUTHOR  := aks796, Square Hair Team
 APP_VERSION := 1.0.0
