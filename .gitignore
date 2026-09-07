@@ -1,0 +1,21 @@
+build/
+*.nro
+*.nacp
+*.elf
+*.so
+*.apk
+*.xapk
+
+# Never commit game data.
+libmain.so
+ba_data/
+pylib/
+payload_info
+out/
+
+# Local run artifacts.
+trace.txt
+fatal.txt
+bombsquad_nx.cfg
+
+.DS_Store

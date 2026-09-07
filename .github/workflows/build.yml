@@ -1,0 +1,72 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkita64:latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Nothing from the game may ever land in this repository.
+      - name: Refuse to build with game binaries present
+        run: |
+          found=$(find . -path ./.git -prune -o \
+            \( -name '*.so' -o -name '*.apk' -o -name '*.xapk' \
+               -o -name 'payload_info' -o -name '*.ktx' \) -print)
+          if [ -n "$found" ]; then
+            echo "Game files found in the tree:"
+            echo "$found"
+            exit 1
+          fi
+
+      - name: Install portlibs
+        run: |
+          # devkitPro ships its package manager as dkp-pacman. Some images
+          # also provide a plain pacman; the base image is Ubuntu, which has
+          # neither by default, so pick whichever is actually there and say
+          # so rather than failing with "command not found".
+          pm=$(command -v dkp-pacman || command -v pacman || true)
+          if [ -z "$pm" ]; then
+            echo "No devkitPro package manager found in this image. Looked for"
+            echo "dkp-pacman and pacman on PATH:"
+            echo "$PATH"
+            exit 1
+          fi
+          echo "Using $pm"
+          "$pm" -Sy --noconfirm --needed \
+            switch-mesa switch-libdrm_nouveau switch-sdl2 switch-zlib \
+            switch-freetype switch-libpng switch-harfbuzz switch-bzip2
+
+      - name: Check the generated import table is current
+        run: |
+          # Regenerating needs a game library, which CI never has, so only the
+          # table's internal consistency is checked here. Kept to shell tools
+          # so the job does not depend on anything beyond the toolchain image.
+          names=$(sed -n '/DynLibFunction dynlib_functions\[\] = {/,/^};/p' \
+                  source/imports.c | grep -o '{"[^"]*"' | sed 's/{"//;s/"$//')
+          total=$(printf '%s\n' "$names" | grep -c .)
+          unique=$(printf '%s\n' "$names" | sort -u | grep -c .)
+          if [ "$total" -eq 0 ]; then
+            echo "No bindings found in source/imports.c."
+            exit 1
+          fi
+          if [ "$total" -ne "$unique" ]; then
+            echo "Duplicate bindings:"
+            printf '%s\n' "$names" | sort | uniq -d
+            exit 1
+          fi
+          echo "$total bindings, all named and unique"
+
+      - name: Build
+        run: make -j"$(nproc)"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: explodinary
+          path: explodinary.nro
